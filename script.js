@@ -6,12 +6,12 @@ import {
   getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-/* 🔑 Gemini */
+/* Gemini */
 const ai = new GoogleGenAI({
-  apiKey: "AIzaSyC7DuTLo5X3pypN3_jdFcb-CRBgZNdUOT8"
+  apiKey: "AIzaSyCe_L9bYEtDgIW-GYnV5dLW1GGfhOfI7-w"
 });
 
-/* 🔥 Firebase */
+/* Firebase */
 const firebaseConfig = {
   apiKey: "AIzaSyAzzWgQNeLIQXzoIdC488IhgGAJT4j0Bz8",
   authDomain: "freshstart-ai-a8581.firebaseapp.com",
@@ -39,7 +39,7 @@ askBtn.addEventListener("click", async () => {
   // answerDiv.innerText = "Fetching official guidelines...";
 
   try {
-    /* 📄 Fetch Firestore documents */
+    /* fetch girestore doc */
     const docsToFetch = [
       "syllabus_structure",
       "exam_format_marking",
@@ -58,7 +58,7 @@ askBtn.addEventListener("click", async () => {
       }
     }
 
-    /* 🧠 Ask Gemini */
+    /* ask Gemini */
     answerDiv.innerText = "Thinking...";
 
     const response = await ai.models.generateContent({
