@@ -1,3 +1,7 @@
+export const config = {
+  runtime: "nodejs"
+};
+
 import { GoogleGenAI } from "@google/genai";
 
 const ai = new GoogleGenAI({
@@ -22,12 +26,18 @@ export default async function handler(req, res) {
       contents: prompt
     });
 
+    // IMPORTANT: always return JSON
     return res.status(200).json({
       text: response.text
     });
 
   } catch (err) {
-    console.error("Gemini SDK error:", err);
-    return res.status(500).json({ error: "AI request failed" });
+    console.error("🔥 Gemini SDK error:", err);
+
+    // Always return JSON, even on error
+    return res.status(500).json({
+      error: "AI request failed",
+      message: err?.message || "Unknown error"
+    });
   }
 }
