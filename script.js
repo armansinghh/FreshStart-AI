@@ -1,4 +1,3 @@
-import { GoogleGenAI } from "https://esm.run/@google/genai";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getFirestore,
@@ -6,12 +5,7 @@ import {
   getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-/* Gemini */
-const ai = new GoogleGenAI({
-  apiKey: "AIzaSyCe_L9bYEtDgIW-GYnV5dLW1GGfhOfI7-w"
-});
-
-/* Firebase */
+/* ===================== FIREBASE (DB ONLY) ===================== */
 const firebaseConfig = {
   apiKey: "AIzaSyAzzWgQNeLIQXzoIdC488IhgGAJT4j0Bz8",
   authDomain: "freshstart-ai-a8581.firebaseapp.com",
@@ -24,22 +18,29 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* UI */
+/* ===================== UI ELEMENTS ===================== */
 const askBtn = document.getElementById("askBtn");
 const answerDiv = document.getElementById("answer");
+const questionInput = document.getElementById("question");
 
+const continueBtn = document.getElementById("continueBtn");
+const onboarding = document.getElementById("onboarding");
+const chat = document.getElementById("chat");
+
+const greeting = document.getElementById("greeting");
+const inputBox = document.getElementById("inputBox");
+
+/* ===================== ASK QUESTION ===================== */
 askBtn.addEventListener("click", async () => {
-  const question = document.getElementById("question").value;
+  const question = questionInput.value;
 
   if (!question.trim()) {
     answerDiv.innerText = "Please enter a question.";
     return;
   }
 
-  // answerDiv.innerText = "Fetching official guidelines...";
-
   try {
-    /* fetch girestore doc */
+    /* -------- Fetch Firestore docs (UNCHANGED) -------- */
     const docsToFetch = [
       "syllabus_structure",
       "exam_format_marking",
@@ -58,12 +59,14 @@ askBtn.addEventListener("click", async () => {
       }
     }
 
-    /* ask Gemini */
+    /* -------- Ask Gemini via Vercel (ONLY CHANGE) -------- */
     answerDiv.innerText = "Thinking...";
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: `
+    const res = await fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        prompt: `
 You are FreshStart AI, an onboarding assistant for first-year college students.
 
 You must answer ONLY using the official data provided below.
@@ -77,11 +80,16 @@ ${contextText}
 Student Question:
 ${question}
 `
+      })
     });
 
-    // answerDiv.innerText = response.text;
-    answerDiv.innerHTML = marked.parse(response.text);
+    const data = await res.json();
 
+    if (!res.ok || data.error) {
+      throw new Error(data.error || "AI request failed");
+    }
+
+    answerDiv.innerHTML = marked.parse(data.text);
 
   } catch (err) {
     console.error(err);
@@ -89,52 +97,38 @@ ${question}
   }
 });
 
-// Onboarding flow
-const continueBtn = document.getElementById("continueBtn");
-const onboarding = document.getElementById("onboarding");
-const chat = document.getElementById("chat");
-
+/* ===================== ONBOARDING FLOW ===================== */
 continueBtn.addEventListener("click", () => {
-  // animate onboarding out
   onboarding.classList.add("opacity-0", "-translate-y-5");
 
   setTimeout(() => {
     onboarding.classList.add("hidden");
 
-    // show chat
     chat.classList.remove("hidden");
-
-    // force reflow
-    chat.offsetHeight;
+    chat.offsetHeight; // force reflow
 
     chat.classList.remove("opacity-0", "translate-y-5");
     chat.classList.add("opacity-100", "translate-y-0");
   }, 500);
 });
 
-const greeting = document.getElementById("greeting");
-const inputBox = document.getElementById("inputBox");
-const chatSection = document.getElementById("chat");
+/* ===================== CHAT LAYOUT TRANSITION ===================== */
 askBtn.addEventListener("click", () => {
-  //switch layout
-  // chat.classList.remove("justify-center");
-  // chat.classList.add("justify-end");
-
   // fade greeting out
   greeting.classList.add("opacity-0", "translate-y-4", "h-0");
 
   setTimeout(() => {
     greeting.classList.add("hidden");
   }, 600);
-  // move input 
+
+  // move input
   inputBox.classList.add("translate-y-4");
 
   // show answer
   answerDiv.classList.remove("hidden");
-  // add animation delay to match input box movement
+
   setTimeout(() => {
     answerDiv.classList.remove("opacity-0", "translate-y-4", "pointer-events-none");
     answerDiv.classList.add("opacity-100");
   }, 600);
-
 });
