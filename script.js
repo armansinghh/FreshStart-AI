@@ -1,0 +1,140 @@
+import { GoogleGenAI } from "https://esm.run/@google/genai";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* 🔑 Gemini */
+const ai = new GoogleGenAI({
+  apiKey: "AIzaSyC7DuTLo5X3pypN3_jdFcb-CRBgZNdUOT8"
+});
+
+/* 🔥 Firebase */
+const firebaseConfig = {
+  apiKey: "AIzaSyAzzWgQNeLIQXzoIdC488IhgGAJT4j0Bz8",
+  authDomain: "freshstart-ai-a8581.firebaseapp.com",
+  projectId: "freshstart-ai-a8581",
+  storageBucket: "freshstart-ai-a8581.firebasestorage.app",
+  messagingSenderId: "34272612578",
+  appId: "1:34272612578:web:5e6977fe59b056eaa80ebb"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* UI */
+const askBtn = document.getElementById("askBtn");
+const answerDiv = document.getElementById("answer");
+
+askBtn.addEventListener("click", async () => {
+  const question = document.getElementById("question").value;
+
+  if (!question.trim()) {
+    answerDiv.innerText = "Please enter a question.";
+    return;
+  }
+
+  // answerDiv.innerText = "Fetching official guidelines...";
+
+  try {
+    /* 📄 Fetch Firestore documents */
+    const docsToFetch = [
+      "syllabus_structure",
+      "exam_format_marking",
+      "assignment_ppt_guidelines"
+    ];
+
+    let contextText = "";
+
+    for (const docId of docsToFetch) {
+      const ref = doc(db, "freshstart_data", docId);
+      const snap = await getDoc(ref);
+
+      if (snap.exists()) {
+        const data = snap.data();
+        contextText += `\n\n${data.title}:\n${data.content}`;
+      }
+    }
+
+    /* 🧠 Ask Gemini */
+    answerDiv.innerText = "Thinking...";
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+You are FreshStart AI, an onboarding assistant for first-year college students.
+
+You must answer ONLY using the official data provided below.
+
+Use a clear, readable format with headings and bullet points.
+Do not add extra assumptions.
+
+Official Data:
+${contextText}
+
+Student Question:
+${question}
+`
+    });
+
+    // answerDiv.innerText = response.text;
+    answerDiv.innerHTML = marked.parse(response.text);
+
+
+  } catch (err) {
+    console.error(err);
+    answerDiv.innerText = "Something went wrong while fetching data.";
+  }
+});
+
+// Onboarding flow
+const continueBtn = document.getElementById("continueBtn");
+const onboarding = document.getElementById("onboarding");
+const chat = document.getElementById("chat");
+
+continueBtn.addEventListener("click", () => {
+  // animate onboarding out
+  onboarding.classList.add("opacity-0", "-translate-y-5");
+
+  setTimeout(() => {
+    onboarding.classList.add("hidden");
+
+    // show chat
+    chat.classList.remove("hidden");
+
+    // force reflow
+    chat.offsetHeight;
+
+    chat.classList.remove("opacity-0", "translate-y-5");
+    chat.classList.add("opacity-100", "translate-y-0");
+  }, 500);
+});
+
+const greeting = document.getElementById("greeting");
+const inputBox = document.getElementById("inputBox");
+const chatSection = document.getElementById("chat");
+askBtn.addEventListener("click", () => {
+  //switch layout
+  // chat.classList.remove("justify-center");
+  // chat.classList.add("justify-end");
+
+  // fade greeting out
+  greeting.classList.add("opacity-0", "translate-y-4", "h-0");
+
+  setTimeout(() => {
+    greeting.classList.add("hidden");
+  }, 600);
+  // move input 
+  inputBox.classList.add("translate-y-4");
+
+  // show answer
+  answerDiv.classList.remove("hidden");
+  // add animation delay to match input box movement
+  setTimeout(() => {
+    answerDiv.classList.remove("opacity-0", "translate-y-4", "pointer-events-none");
+    answerDiv.classList.add("opacity-100");
+  }, 600);
+
+});
