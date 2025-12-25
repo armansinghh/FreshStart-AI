@@ -83,9 +83,17 @@ ${question}
       })
     });
 
-    const data = await res.json();
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || "AI request failed");
+    }
 
-    if (!res.ok || data.error) {
+    const contentType = res.headers.get("content-type") || "";
+    const data = contentType.includes("application/json")
+      ? await res.json()
+      : { text: await res.text() };
+
+    if (data.error) {
       throw new Error(data.error || "AI request failed");
     }
 
