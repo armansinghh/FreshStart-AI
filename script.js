@@ -5,7 +5,7 @@ import {
   getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-/* ===================== FIREBASE (DB ONLY) ===================== */
+/* firebase db */
 const firebaseConfig = {
   apiKey: "AIzaSyAzzWgQNeLIQXzoIdC488IhgGAJT4j0Bz8",
   authDomain: "freshstart-ai-a8581.firebaseapp.com",
@@ -18,7 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* ===================== UI ELEMENTS ===================== */
+/* ui elem */
 const askBtn = document.getElementById("askBtn");
 const answerDiv = document.getElementById("answer");
 const questionInput = document.getElementById("question");
@@ -30,7 +30,7 @@ const chat = document.getElementById("chat");
 const greeting = document.getElementById("greeting");
 const inputBox = document.getElementById("inputBox");
 
-/* ===================== ASK QUESTION ===================== */
+/* ask que */
 askBtn.addEventListener("click", async () => {
   const question = questionInput.value;
 
@@ -40,7 +40,7 @@ askBtn.addEventListener("click", async () => {
   }
 
   try {
-    /* -------- Fetch Firestore docs (UNCHANGED) -------- */
+    /* fetch data */
     const docsToFetch = [
       "syllabus_structure",
       "exam_format_marking",
@@ -59,7 +59,7 @@ askBtn.addEventListener("click", async () => {
       }
     }
 
-    /* -------- Ask Gemini via Vercel (ONLY CHANGE) -------- */
+    /* ask gemini */
     answerDiv.innerText = "Thinking...";
 
     const res = await fetch("/api/ask", {
@@ -105,7 +105,7 @@ ${question}
   }
 });
 
-/* ===================== ONBOARDING FLOW ===================== */
+/* flow */
 continueBtn.addEventListener("click", () => {
   onboarding.classList.add("opacity-0", "-translate-y-5");
 
@@ -120,7 +120,7 @@ continueBtn.addEventListener("click", () => {
   }, 500);
 });
 
-/* ===================== CHAT LAYOUT TRANSITION ===================== */
+/* chat layout transition */
 askBtn.addEventListener("click", () => {
   // fade greeting out
   greeting.classList.add("opacity-0", "translate-y-4", "h-0");
