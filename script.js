@@ -44,7 +44,7 @@ askBtn.addEventListener("click", async () => {
     const docsToFetch = [
       "syllabus_structure",
       "exam_format_marking",
-      "lab-report-guidelines"
+      "lab_report_guidelines"
     ];
 
     let contextText = "";
