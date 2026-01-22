@@ -1,6 +1,6 @@
 # 🎓 FreshStart AI
 
-**Academic Onboarding Assistant for First-Year Students**
+**Academic Onboarding Assistant for First Year Students**
 
 FreshStart AI is a web-based onboarding assistant designed to help first-year college students understand syllabus structure, exam patterns, assignments, and academic guidelines.
 It provides **clear, structured answers generated strictly from official academic documents**, ensuring accuracy and reliability.
@@ -58,7 +58,7 @@ It provides **clear, structured answers generated strictly from official academi
 ├── /api
 │   └── ask.js        # Vercel serverless function (Gemini SDK)
 ├── /img
-│   └── og-image.png
+│   └── (images)
 └── README.md
 ```
 
@@ -87,10 +87,9 @@ Follow these steps to build your own version.
 5. Add documents (example IDs):
 
    ```
-   syllabus_structure
-   exam_format_marking
-   assignment_ppt_guidelines
-   lab_report_guidelines
+    syllabus_structure
+    exam_format_marking
+    lab_report_guidelines
    ```
 
 6. Each document should have fields like:
@@ -205,3 +204,8 @@ This project is intended for educational and demonstration purposes.
 ### ⭐ Final Note
 
 FreshStart AI is built as a **focused, reliable MVP** that prioritizes **clarity over complexity** — helping students start college with confidence.
+
+---
+
+Made with ❤️
+by Arman Singh
