@@ -1,3 +1,5 @@
+# ***updated version coming soon!
+
 # 🎓 FreshStart AI
 
 **Academic Onboarding Assistant for First Year Students**
