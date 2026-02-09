@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+body {
+  font-family: 'Google Sans', sans-serif;
+}
+
+#head {
+  z-index: 9;
+}
+
+#answer {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.5) transparent;
+}
+
+#answer h3 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+#answer ul {
+  margin-left: 1.25rem;
+  list-style: disc;
+}
+
+#answer li {
+  margin-bottom: 0.4rem;
+}
