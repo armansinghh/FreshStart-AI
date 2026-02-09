@@ -234,10 +234,37 @@ Footer with copyright and version information.
 
 ## 🚀 Deployment to Vercel
 
-1. **Frontend:** Automatically deploys from `main` branch
-2. **Backend:** Deploy `server.cjs` as a serverless function
+### Setup
 
-See [Vercel documentation](https://vercel.com/docs) for detailed instructions.
+1. **Create a Vercel account** at [vercel.com](https://vercel.com)
+2. **Connect your GitHub repository** to Vercel
+3. **Add environment variables** in Vercel dashboard:
+   - Go to Project Settings → Environment Variables
+   - Add `GEMINI_API_KEY` with your Google Gemini API key
+
+### Deployment
+
+1. Push your code to GitHub (make sure you have `api/ask.js` and `vercel.json`)
+2. Vercel will automatically:
+   - Build the React frontend (`npm run build`)
+   - Deploy serverless functions from the `/api` directory
+   - Serve the frontend and route `/api/*` to the serverless functions
+
+### How It Works on Vercel
+
+- **Frontend:** React app served from `dist/` folder
+- **Backend:** `/api/ask.js` runs as a serverless function that calls Gemini AI
+- **Routing:** Requests to `/api/ask` automatically route to the serverless function
+
+### Local Development vs Production
+
+| Aspect | Local | Vercel |
+|--------|-------|--------|
+| Frontend | Vite dev server (port 5174) | Vercel static hosting |
+| Backend API | Node.js Express (port 3001) | Vercel Serverless Functions |
+| Proxy | Vite proxy redirects `/api/*` → localhost:3001 | Direct route to `/api/*` functions |
+
+See [Vercel documentation](https://vercel.com/docs) for more details.
 
 ---
 
