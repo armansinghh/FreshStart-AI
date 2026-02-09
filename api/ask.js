@@ -1,4 +1,4 @@
-const { GoogleGenAI } = require("@google/genai");
+import { GoogleGenAI } from "@google/genai";
 
 const apiKey = process.env.GEMINI_API_KEY;
 
@@ -10,7 +10,7 @@ const client = new GoogleGenAI({
   apiKey: apiKey
 });
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   // Enable CORS
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -62,4 +62,4 @@ module.exports = async function handler(req, res) {
       details: err.toString()
     });
   }
-};
+}
