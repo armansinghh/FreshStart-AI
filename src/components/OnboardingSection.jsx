@@ -7,7 +7,7 @@ export function OnboardingSection({ onContinue, isHidden }) {
         <h1 className="text-5xl md:text-7xl font-light tracking-tight text-white">
           Chat with
           <span
-            className="font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-600 ml-2">
+            className="font-extrabold bg-clip-text text-transparent bg-linear-to-r from-cyan-400 to-blue-600 ml-2">
             FreshStart AI
           </span>
         </h1>
@@ -22,7 +22,7 @@ export function OnboardingSection({ onContinue, isHidden }) {
 
         <div className="mt-8">
           <button onClick={onContinue}
-            className="inline-block bg-gradient-to-br from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-white px-6 py-3 rounded-full shadow-lg transition">
+            className="inline-block bg-linear-to-br from-blue-600 to-sky-600 hover:from-blue-500 hover:to-sky-500 text-white px-6 py-3 rounded-full shadow-lg transition">
             Get Started
           </button>
         </div>

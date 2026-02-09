@@ -46,7 +46,7 @@ export function ChatSection({ isHidden }) {
       <div className="max-w-2xl mx-auto w-full space-y-4">
 
         {showAnswer && (
-          <div className={`bg-neutral-900 rounded-3xl px-6 py-4 text-neutral-100 h-[55vh] overflow-y-auto transition-all duration-500 ease-out ${
+          <div className={`answer-scroll bg-neutral-900 rounded-3xl px-6 py-4 text-neutral-100 h-[55vh] overflow-y-auto transition-all duration-500 ease-out ${
             showAnswer ? 'opacity-100' : 'opacity-0 translate-y-4 pointer-events-none'
           }`}>
             {loading ? (
@@ -82,7 +82,7 @@ export function ChatSection({ isHidden }) {
           />
 
           <button onClick={handleAsk}
-            className="ml-4 h-12 w-12 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-sky-600 disabled:opacity-50 transition"
+            className="ml-4 h-12 w-12 flex items-center justify-center rounded-full bg-linear-to-br from-blue-600 to-sky-600 disabled:opacity-50 transition"
             aria-label="Send"
             disabled={loading}>
             <i className="fa-solid fa-paper-plane text-white"></i>

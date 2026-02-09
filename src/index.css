@@ -5,26 +5,26 @@ body {
 }
 
 #head {
-  z-index: 9;
+  z-index: 0;
 }
 
-#answer {
+.answer-scroll {
   scrollbar-width: thin;
-  scrollbar-color: rgba(100, 116, 139, 0.5) transparent;
+  scrollbar-color: rgba(100,116,139,0.5) transparent;
 }
 
-#answer h3 {
+.answer-scroll h3 {
   margin-top: 1rem;
   margin-bottom: 0.5rem;
   font-size: 1.25rem;
   font-weight: 600;
 }
 
-#answer ul {
+.answer-scroll ul {
   margin-left: 1.25rem;
   list-style: disc;
 }
 
-#answer li {
+.answer-scroll li {
   margin-bottom: 0.4rem;
 }
