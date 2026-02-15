@@ -19,7 +19,7 @@ export function OnboardingSection({ onContinue, isHidden }) {
         </p>
 
         <p className="mt-4 text-slate-300 text-sm">
-          Choose your branch: <span className="font-semibold text-white">AI&DS</span>
+          Choose your branch: <span className="font-semibold text-white hover:cursor-not-allowed">AI&DS</span>
         </p>
 
         <div className="mt-8">
