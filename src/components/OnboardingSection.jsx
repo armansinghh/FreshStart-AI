@@ -1,19 +1,21 @@
 export function OnboardingSection({ onContinue, isHidden }) {
   return (
-    <section className={`fixed inset-0 flex items-center justify-center transition-all duration-500 ease-out ${
-      isHidden ? 'opacity-0 -translate-y-5 pointer-events-none' : 'opacity-100 translate-y-0'
-    }`}>
+    <section className={`fixed inset-0 flex items-center justify-center transition-all duration-500 ease-out ${isHidden ? 'opacity-0 -translate-y-5 pointer-events-none' : 'opacity-100 translate-y-0'
+      }`}>
       <div className="text-center px-0 py-24 max-w-3xl">
         <h1 className="text-5xl md:text-7xl font-light tracking-tight text-white">
-          Chat with
+          <span className="block md:inline">
+            Chat with
+          </span>{" "}
           <span
-            className="font-extrabold bg-clip-text text-transparent bg-linear-to-r from-cyan-400 to-blue-600 ml-2">
+            className="block md:inline font-extrabold bg-clip-text text-transparent bg-linear-to-r from-cyan-400 to-blue-600">
             FreshStart AI
           </span>
-        </h1>
+        </h1> 
 
-        <p className="mt-6 text-lg md:text-xl text-slate-300">
-          Confused about syllabus, exams, or report formats? Let's get you started
+
+        <p className="mt-6 mx-2 text-lg md:text-xl text-slate-300">
+          <span className="block md:inline">Confused about syllabus, exams, or report formats?</span>{" "}<span className="block md:inline"> Let's get you started </span>
         </p>
 
         <p className="mt-4 text-slate-300 text-sm">
